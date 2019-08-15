@@ -30,6 +30,7 @@ var currentStreak = 1;
 function preload() {
     soundFormats('mp3', 'ogg');
     turbanImg = loadImage('assets/turban.png');
+    bombeImg = loadImage('assets/bombe.png')
     explosionSound = loadSound('assets/explosion.mp3');
 }
 
@@ -46,6 +47,8 @@ function draw() {
     move();
     checkScore();
     display();
+
+    turban.mouseMove(mouseX, mouseY);
 }
 
 function display() {
@@ -110,8 +113,10 @@ function shootNew() {
 }
 
 function keyPressed() {
+    /*
     turban.move(key);
     turban.speedController(keyCode);
+    */
 }
 
 function mousePressed(){
@@ -166,6 +171,7 @@ OPGAVER
 
             *Done Turban har nu et billede
             *Done Lyd for point
+            *Done kan nu flyttes med musen - Gammel kode der rykkede med WASD og speed med piltaster er kommenteret ud.
 
  Opgave 7 - lav en Appelsin-klasse, lige som der er en Kurv-klasse. 
             Flyt koden til appelsinen ud i et selvstændigt script.

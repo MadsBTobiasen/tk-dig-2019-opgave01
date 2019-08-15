@@ -92,4 +92,9 @@ function Kurv(x, y, bredde, dybde, speed, billede) {
 
     }
 
+    this.mouseMove = function(mouseXX, mouseYY) {
+        this.x = mouseXX;
+        this.y = mouseYY;
+    }
+
 } 
