@@ -128,7 +128,11 @@ OPGAVER
  Opgave 1 - undersøg hvad variablerne  grav  og  tid  bruges til.
             Skriv det i kommentarer, prøv at se hvad der sker, når
             I laver dem om.
+            
 
+
+
+            
             *Done Grav - grav er en variable der definere tyngdekraften der bliver sat på appelsinen
             *Done Tid - tid er en respawn timer, en værdi over 100 angiver respawn tiden. Renamed tid -> respawnTimer
 
