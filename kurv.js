@@ -12,7 +12,7 @@ class Kurv {
     tegn() {
         image(this.billede, this.x, this.y, this.bred, this.dyb); //Tegner selve kurven
         fill(255, 255, 255); //Hvid farve
-        text("Speed: "+this.speed, width-80, height-30); //Tegner kurvens hastighed
+        //text("Speed: "+this.speed, width-80, height-30); //Tegner kurvens hastighed
     }
 
     move(tast) {

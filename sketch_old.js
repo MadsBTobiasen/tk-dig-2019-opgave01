@@ -36,14 +36,19 @@ function preload() {
 
 function setup() {
     createCanvas(750, 600);
+    newspeed = yspeed;
+    x = rad;
     turban = new Kurv(670, 100, 70, 50, 10, turbanImg);
     explosionSound.setVolume(1);
 }
 
 function draw() {
     background(0);
+    move();
+    checkScore();
     display();
-    gameMechanics();
+
+    turban.mouseMove(mouseX, mouseY);
 }
 
 function display() {
@@ -52,14 +57,59 @@ function display() {
     text("Streak: "+currentStreak, width-160, 30);
     text("Missed: "+antalMiss, width-240, 30);
     text("Hits: "+antalRamt, width-320, 30);
+    //Her skal vi sørge for at appelsinen bliver vist, hvis den skal vises
+    if(respawnTid > 0) {
+        respawnTid -= 1;
+    }
+    if (respawnTid < 100) {
+        fill(col);
+        ellipse(x, y, rad*2, rad*2); //Appelsinen bliver tegnet
+    }
 
-
+    // Her vises turbanen - foreløbig blot en firkant
     turban.tegn();
 }
+    
+function move() {
+    //Her skal vi sørge for at appelsinen bevæger sig, hvis den er startet
+    if (respawnTid <= 0) {
+        x += xspeed;
+        y += yspeed;
+        yspeed += grav;
+    }
+    
+    if (y < 50) {
+        y -= yspeed - grav; //Hvis appelsinen rammer den øvre kant, modvirkesr vi y-hastigheden, men fortsat lader grav påvirke bolden.
+    }
+    if (x > width || y > height) { //Bliver kaldt når appelsinen forlader skærmen
+        score -= 1; //Trækker frar score når man misser
+        antalMiss += 1; //Tilføjer en enkel værdi til miss-variablen
+        currentStreak = 1; //Resetter streak-variablen
+        shootNew();
+    }
+}
 
-function gameMechanics() {
-    turban.grebet(0, 0, 0, 0);
-    turban.mouseMove(mouseX, mouseY);
+function checkScore() {
+    // Her checkes om turbanen har fanget appelsinen. Hvis ja, skydes en ny appelsin afsted
+    if (turban.grebet(yspeed, x, y, rad)) {
+        explosionSound.play();
+        explosionSound.jump(2.5);
+        score += currentStreak * 1; //Giver point når man rammer
+        antalRamt += 1;
+        currentStreak += 1; //Gør streak-varialen større når man rammer
+        shootNew(); 
+    }
+}
+    
+function shootNew() {
+    //Her skal vi sørge for at en ny appelsin skydes afsted 
+    x = rad;
+    y = 550;
+    yspeed = newspeed;
+    xspeed = 6*Math.random();
+
+    //Laver en tilfældig respawn tid for appelsinen
+    respawnTimer = (int) (Math.random() * 400);
 }
 
 function keyPressed() {
