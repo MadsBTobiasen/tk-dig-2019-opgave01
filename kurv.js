@@ -45,7 +45,7 @@ class Kurv {
         }
     }
 
-    grebet(yspeed, xa, ya, ra) {
+    grebet(xa, ya, ra) {
        //Opsætter variabler således de kan ændres ved hjælp af variabler
        this.hitboxKurvMaxY = this.y+50;
        this.hitboxKurvMinY = this.y+8;

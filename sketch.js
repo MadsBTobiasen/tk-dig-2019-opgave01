@@ -3,16 +3,6 @@ Først laver vi et nogle variable til at lave en appelsin
  - en kugle som vi vil skyde afsted og fange i en turban
 */
 
-// Appelsinen
-var x = 0; 
-var y = Math.floor (Math.random() * 550);
-var rad = 20;
-var xspeed = 4;
-var yspeed = -10;
-var newspeed;
-var grav = 0.1; //Grav = Gravity, jo højere denne variable er, desto mere bliver appelsinen trukket ned.
-var col = [200,100,0];
-
 // Turbanen
 var turban;
 let turbanImg;
@@ -53,7 +43,6 @@ function display() {
     text("Missed: "+antalMiss, width-240, 30);
     text("Hits: "+antalRamt, width-320, 30);
 
-
     turban.tegn();
 }
 
@@ -69,7 +58,7 @@ function keyPressed() {
     */
 }
 
-function mousePressed(){
+function mousePressed() {
 
 }
 
