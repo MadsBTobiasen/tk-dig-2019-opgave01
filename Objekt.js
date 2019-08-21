@@ -2,24 +2,23 @@ class Objekt {
     constructor(x, y, xspeed, yspeed, rad, grav, respawnTimer, billede, sound, kurv) {
         //Variables fra constructor
         //Koordinator
-        this.defaultX = x;
-        this.defaultY = y;
+        this.DEFAULTX = x; //Start positionen for x.
+        this.DEFAULTY = y; //Start positionen for y.
         this.x = x;
         this.y = y;
 
         //Hastighed
-        this.defaultYSpeed = yspeed;
+        this.DEFAULTYSPEED = yspeed;
         this.xspeed = xspeed;
         this.yspeed = yspeed;
-        this.gravity = grav;
+        this.GRAVITY = grav;
 
-
-        this.rad = rad;
+        this.RAD = rad;
         this.respawnTimer = respawnTimer;
         
-        this.billede = billede;
-        this.sound = sound;
-        this.kurv = kurv;
+        this.BILLEDE = billede;
+        this.SOUND = sound;
+        this.KURV = kurv;
 
         this.activeBool = false;
     }
@@ -35,7 +34,7 @@ class Objekt {
 
         //Hvis objektet rammer den øvre kant, modvirker vi y-hastigheden, men fortsat lader gravity påvirke bolden.
          if(this.y < 50) {
-            this.y -= this.yspeed - this.gravity;
+            this.y -= this.yspeed - this.GRAVITY;
         }
 
         checkScore();
@@ -45,10 +44,10 @@ class Objekt {
     checkScore() {
 
         if(this.yspeed > 0){ //Så længe objektet "falder", så kan det gribes.
-            if(this.kurv.grebet(this.x, this.y, this.rad)) { //Bliver objektet grebet.
-                explosionSound.play();
-                explosionSound.jump(2.5);
-                // SCORE ADD HERE
+            if(this.KURV.grebet(this.x, this.y, this.RAD)) { //Bliver objektet grebet.
+                SOUND.play();
+                SOUND.jump(2.5);
+                //SCORE ADD HERE
                 //AMOUNT HIT ADD HERE
                 //STREAK ADD HERE
 
@@ -69,8 +68,10 @@ class Objekt {
 
     reset() {
         this.activeBool = false;
-        this.yspeed = this.defaultY;
+        this.yspeed = this.DEFAULTYSPEED;
         this.xspeed = 6*Math.random();
+        this.y = this.DEFAULTY;
+        this.x = this.DEFAULTX;
     }
 
 
