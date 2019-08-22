@@ -1,5 +1,5 @@
 class Objekt {
-    constructor(x, y, xspeed, yspeed, rad, grav, respawnTimer, billede, sound, kurv) {
+    constructor(x, y, xspeed, yspeed, rad, grav, billede, sound, kurv, point) {
         //Variables fra constructor
         //Koordinator
         this.DEFAULTX = x; //Start positionen for x.
@@ -14,11 +14,11 @@ class Objekt {
         this.GRAVITY = grav;
 
         this.RAD = rad;
-        this.respawnTimer = respawnTimer;
         
         this.BILLEDE = billede;
         this.SOUND = sound;
         this.KURV = kurv;
+        this.POINT = point;
 
         this.activeBool = false;
     }
@@ -26,41 +26,51 @@ class Objekt {
     active(activeBool) {
         this.activeBool = activeBool;
         if(this.activeBool) { //Hvis objektet bliver aktiveret, bliver det også tegnet, og de tilhørende funktioner køres.
-            tegn();
+            this.tegn();
         }
     }
     
     tegn() {
 
         //Hvis objektet rammer den øvre kant, modvirker vi y-hastigheden, men fortsat lader gravity påvirke bolden.
-         if(this.y < 50) {
+    
+        this.x += this.xspeed;
+        this.y -= this.yspeed;
+        this.yspeed -= this.GRAVITY;
+        
+        if(this.y < 50) {
             this.y -= this.yspeed - this.GRAVITY;
         }
 
-        checkScore();
+        image(this.BILLEDE, this.x, this.y, this.RAD, this.RAD);
+
+        if(this.yspeed < 0)
+        {
+            this.checkScore();
+        }
 
     }
     
     checkScore() {
 
-        if(this.yspeed > 0){ //Så længe objektet "falder", så kan det gribes.
+        if(this.yspeed < 0){ //Så længe objektet "falder", så kan det gribes.
             if(this.KURV.grebet(this.x, this.y, this.RAD)) { //Bliver objektet grebet.
-                SOUND.play();
-                SOUND.jump(2.5);
-                //SCORE ADD HERE
-                //AMOUNT HIT ADD HERE
-                //STREAK ADD HERE
+                this.SOUND.play();
+                this.SOUND.jump(2.5);
+                this.POINT.score(this.POINT.currentStreak*1);
+                this.POINT.hit();
+                this.POINT.streak(true);
 
-                //Resetter objektet til default værdier her
-                reset();
+                //Resetter objektet til default værdier her.
+                this.reset();
             }
-            if(this.x > width || this.y > height) { //Objektet falder ud af skærmen.
-                //SCORE SUBTRACT HERE
-                //AMOUNT MISS ADD HERE
-                //STREAK RESET HERE
+            if(this.x > 600 || this.y > 750) { //Objektet falder ud af skærmen.
+                this.POINT.score(-1);
+                this.POINT.missed();
+                this.POINT.streak(false);
 
                 //Resetter objektet til default værdier her
-                reset();
+                this.reset();
             }
         }
 

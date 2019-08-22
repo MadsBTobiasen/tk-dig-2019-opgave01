@@ -69,14 +69,13 @@ class Kurv {
            noStroke();
        }
 
-       if (yspeed > 0) { //Objektet kan kun gribes hvis objektet er igang med at falde ned
            if ((this.hitboxObjectMaxY < this.hitboxKurvMaxY && this.hitboxObjectMaxY > this.hitboxKurvMinY) && this.hitboxObjectMaxX >this.hitboxKurvMinX && this.hitboxObjectMaxX < this.hitboxKurvMaxX) { //Her checker vi om objektet og kurven overlapper, således at vi kan retunere true - Altså at objektet har ramt.
                return true; //Objekt rammer
            }
            else { //Hvis ikke overstående kriterie opfyldes:
                return false; //Objekt har ikke ramt
            }        
-       }        
+              
     }
 
     mouseMove(mouseXX, mouseYY) { //Skifter kurvens x og y koordinat til at være lig med musen

@@ -12,7 +12,10 @@ var score = 0;
 var antalRamt = 0;
 var antalMiss = 0;
 var currentStreak = 1;
+var currentScene = 0;
 
+//Bomber
+var bombe;
 /* 
  * 
  */
@@ -27,35 +30,58 @@ function preload() {
 function setup() {
     createCanvas(750, 600);
     turban = new Kurv(670, 100, 70, 50, 10, turbanImg);
+    point = new Point();
+    bombe0 = new Objekt(50, 550, 4, 10, 25, 0.1, bombeImg, explosionSound, turban, point);
+    bombe1 = new Objekt(50, 550, 4, 3, 25, 0.1, bombeImg, explosionSound, turban, point);
+    bombe2 = new Objekt(50, 550, 4, 7, 25, 0.1, bombeImg, explosionSound, turban, point);
+    bombe3 = new Objekt(50, 550, 4, 15, 25, 0.1, bombeImg, explosionSound, turban, point);
+    bombe4 = new Objekt(50, 550, 4, 19, 25, 0.1, bombeImg, explosionSound, turban, point);
     explosionSound.setVolume(1);
 }
 
 function draw() {
+
     background(0);
-    display();
-    gameMechanics();
+
+    switch (currentScene) {
+        case 0:
+            fill(255, 105, 180);
+            text("GAME PLEASE", width/2, height/2);
+            break;
+        case 1:
+            display();
+            gameMechanics();
+            bombe0.active(true);
+            bombe1.active(true);
+            bombe2.active(true);
+            bombe3.active(true);
+            bombe4.active(true);
+            break;
+    }
+
 }
 
 function display() {
     fill(255);
-    text("Score: "+score, width-80, 30);
-    text("Streak: "+currentStreak, width-160, 30);
-    text("Missed: "+antalMiss, width-240, 30);
-    text("Hits: "+antalRamt, width-320, 30);
+    text("Score: "+point.varScore, width-80, 30);
+    text("Streak: "+point.currentStreak, width-160, 30);
+    text("Missed: "+point.varMissed, width-240, 30);
+    text("Hits: "+point.varHit, width-320, 30);
 
     turban.tegn();
 }
 
 function gameMechanics() {
-    turban.grebet(0, 0, 0, 0);
     turban.mouseMove(mouseX, mouseY);
 }
 
 function keyPressed() {
-    /*
-    turban.move(key);
-    turban.speedController(keyCode);
-    */
+    if(key == 0) {
+        currentScene = 0;
+    }
+    if(key == 1) {
+        currentScene = 1;
+    }
 }
 
 function mousePressed() {
@@ -120,11 +146,15 @@ OPGAVER
             kommer til at berøre turbanen. Skriv jeres overvejelser i 
             kommentarerne
 
+            //Rykket Appelsinen ind i Objekt klasse, således der kan kreeres flere appelsiner på en gang.
+
  Opgave 8 - ret programmet til, så der kan være flere appelsiner i 
             luften på en gang, dvs. at der kan skydes en ny appelsin
             afsted før den foregående er forsvundet. Overvej hvordan 
             og hvor hurtigt de skal skydes af, og forklar jeres tanker
             i kommentarerne
+
+            //Appelsiner kan nu være flertallige på skærmen.
 
  Opgave 9 - ret programmet til, så det kan vindes og/eller tabes ved
             at man griber eller misser et antal appelsiner. Sørg for 
