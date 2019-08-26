@@ -21,23 +21,31 @@ function preload() {
 
 function setup() {
     createCanvas(1000, 900);
-    turban = new Kurv(670, 100, 70, 50, 10, turbanImg);
+    turban = new Kurv(670, height+100, 70, 50, 10, turbanImg);
     scene = new Scenes(turbanImg, bombeImg, explosionSound)
-    scene.initiate();
+    scene.initiate(5);
     explosionSound.setVolume(1);
 }
 
 function draw() {
 
-    background(0);
+    /* Vores switch / case bliver brugt til at bestemme hvilken "scene" vi er igang med, således at spillet kan kontrolleres hvilket "stadie" det er i.
+
+    Case 0 = Hovedmenu
+    Case 1 = Spillet
+    Case 2 = Pauseskærm
+
+    */
 
     switch (currentScene) {
         case 0:
-            fill(255, 105, 180);
-            text("GAME PLEASE", width/2, height/2);
+            scene.menuScene();
             break;
         case 1:
             scene.gameScene();
+            break;
+        case 2:
+            scene.pauseScene();
             break;
     }
 
@@ -49,6 +57,9 @@ function keyPressed() {
     }
     if(key == 1) {
         currentScene = 1;
+    }
+    if(key == 'P' || key == 'p') {
+        currentScene = 2;
     }
 }
 

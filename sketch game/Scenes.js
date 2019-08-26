@@ -9,14 +9,13 @@ class Scenes {
         this.objekter = [];
     }
 
-    initiate() {
+    initiate(antalObjekterAtLave) {
         this.point = new Point();
         this.kurv = new Kurv(670, 100, 70, 50, 10, this.kurvBillede);
 
-        var antalBomberAtLave = 5;
-        for(var i = 0; i<antalBomberAtLave; i++) { 
+        for(var i = 0; i<antalObjekterAtLave; i++) { 
             var randomGrav = Math.floor(Math.random() * 3 + 1) / 10;
-            this.objekter[i] = new Objekt(50, 550, 4, 10, 25, randomGrav, this.objektImg, this.pointSound, this.kurv, this.point);
+            this.objekter[i] = new Objekt(50, 550, 6*Math.random(), 10, 25, randomGrav, this.objektImg, this.pointSound, this.kurv, this.point);
         }
     }
 
@@ -30,6 +29,8 @@ class Scenes {
     }
 
     gameDisplay() {
+        background(0);
+
         fill(255);
 
         text("Score: "+this.point.varScore, width-80, 30);
@@ -45,12 +46,24 @@ class Scenes {
     }
 
     gameObjekter() {
-        this.objekter[0].active(true);
-        this.objekter[1].active(true);
-        this.objekter[2].active(true);
-        this.objekter[3].active(true);
-        this.objekter[4].active(true);
+        if(this.point.varScore < 999999) {
+            for(var i = 0; i<this.objekter.length; i++) {
+                this.objekter[i].active(true);
+            }
+        }
     }
 
-    //////////////////////// SPIL-SCENE OG DETS TILHØRENDE FUNKTIONER ////////////////////////
+    //////////////////////// PAUSE-SCENE OG DETS FUNKTIONER ////////////////////////
+
+    pauseScene() {
+        fill(255, 105, 180);
+        text("Game Paused", width/2-50, height/2);
+    }
+
+    //////////////////////// MENU-SCENE OG DETS FUNKTIONER ////////////////////////
+
+    menuScene() {
+        fill(255, 105, 180);
+        text("GAME PLEASE", width/2, height/2);
+    }
 }

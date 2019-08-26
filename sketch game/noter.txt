@@ -1,0 +1,5 @@
+Flag for vundet spil:
+    Streng fra eline sockets
+    
+    Rækkefølge:
+        sketch.js (Tid, score, spillernavn) -> Elinesockets (Vundet / Taber) -> Sketch.js

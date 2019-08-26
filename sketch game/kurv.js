@@ -11,39 +11,9 @@ class Kurv {
 
     tegn() {
         image(this.billede, this.x, this.y, this.bred, this.dyb); //Tegner selve kurven
-        fill(255, 255, 255); //Hvid farve
-        //text("Speed: "+this.speed, width-80, height-30); //Tegner kurvens hastighed
     }
 
-    /*move(tast) {
-        if (tast == 'w' || tast== 'W') { //Styrer med W
-            this.y -= this.speed;
-            if (this.y < 0) {this.y = 0};
-        }
-        if (tast == 's' || tast == 'S') { //Styrer med S
-            this.y += this.speed;
-            if (this.y > height-this.dyb) {this.y = height - this.dyb};
-        }
-        if (tast == 'a' || tast == 'A') { //Styrer med A
-            this.x -= this.speed;
-        }
-        if (tast == 'd' || tast == 'D') { //Styrer med D
-            this.x += this.speed;
-        }
-    }
 
-    speedController(tast) {
-        if (tast == 38 || tast == 39) { //Keycode-formen benyttes således at piletasterne kan styre hastigeheden. Op -og højrepil øger hastigheden
-            this.speed += 10;
-            if (this.speed <= 10) { this.speed = 10; }
-            if (this.speed >= 60) { this.speed = 50; }
-        }
-        if (tast == 37 || tast == 40) { // Ned -og venstrepil sænker hastigheden.
-            this.speed -= 10;
-            if (this.speed <= 10) { this.speed = 10; }
-            if (this.speed >= 60) { this.speed = 50; }
-        }
-    }*/
 
     grebet(xa, ya, yspeed, ra) {
         //Opsætter variabler således hitboxen kan ændres ved hjælp af variabler
@@ -80,11 +50,13 @@ class Kurv {
     }
 
     mouseMove(mouseXX, mouseYY) { //Skifter kurvens x og y koordinat til at være lig med musen
-        if(mouseYY > height-200) {
+        if(mouseYY < height-200) {
+            this.y = height-200;
+        }
+        else {
             this.y = mouseYY;
         }
         this.x = mouseXX;
-
     }
 
 }
