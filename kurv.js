@@ -15,7 +15,7 @@ class Kurv {
         //text("Speed: "+this.speed, width-80, height-30); //Tegner kurvens hastighed
     }
 
-    move(tast) {
+    /*move(tast) {
         if (tast == 'w' || tast== 'W') { //Styrer med W
             this.y -= this.speed;
             if (this.y < 0) {this.y = 0};
@@ -43,21 +43,21 @@ class Kurv {
             if (this.speed <= 10) { this.speed = 10; }
             if (this.speed >= 60) { this.speed = 50; }
         }
-    }
+    }*/
 
-    grebet(xa, ya, ra) {
-       //Opsætter variabler således de kan ændres ved hjælp af variabler
-       this.hitboxKurvMaxY = this.y+50;
-       this.hitboxKurvMinY = this.y+8;
-       this.hitboxKurvMaxX = this.x+this.bred;
-       this.hitboxKurvMinX = this.x;
+    grebet(xa, ya, yspeed, ra) {
+        //Opsætter variabler således hitboxen kan ændres ved hjælp af variabler
+        this.hitboxKurvMaxY = this.y+50;
+        this.hitboxKurvMinY = this.y+8;
+        this.hitboxKurvMaxX = this.x+this.bred;
+        this.hitboxKurvMinX = this.x;
 
-       this.hitboxObjectMaxY = ya + ra;
-       this.hitboxObjectMinY = ya - ra;
-       this.hitboxObjectMaxX = xa + ra;
-       this.hitboxObjectMinX = xa - ra;
+        this.hitboxObjectMaxY = ya + ra;
+        this.hitboxObjectMinY = ya - ra;
+        this.hitboxObjectMaxX = xa + ra;
+        this.hitboxObjectMinX = xa - ra;
 
-       if(this.drawHitbox) { //Her tegnes der hitboxes, så det nemt kan illustreres
+        if(this.drawHitbox) { //Her tegnes der hitboxes, så det nemt kan illustreres
            noFill();
 
            stroke(0, 255, 0);
@@ -67,20 +67,24 @@ class Kurv {
            rect(this.hitboxObjectMinX, this.hitboxObjectMinY, dist(this.hitboxObjectMinX, 0, this.hitboxObjectMaxX, 0), dist(0, this.hitboxObjectMinY, 0, this.hitboxObjectMaxY));
    
            noStroke();
-       }
+        }
 
+        if (yspeed < 0) {
            if ((this.hitboxObjectMaxY < this.hitboxKurvMaxY && this.hitboxObjectMaxY > this.hitboxKurvMinY) && this.hitboxObjectMaxX >this.hitboxKurvMinX && this.hitboxObjectMaxX < this.hitboxKurvMaxX) { //Her checker vi om objektet og kurven overlapper, således at vi kan retunere true - Altså at objektet har ramt.
                return true; //Objekt rammer
            }
            else { //Hvis ikke overstående kriterie opfyldes:
                return false; //Objekt har ikke ramt
            }        
-              
+        }      
     }
 
     mouseMove(mouseXX, mouseYY) { //Skifter kurvens x og y koordinat til at være lig med musen
+        if(mouseYY > height-200) {
+            this.y = mouseYY;
+        }
         this.x = mouseXX;
-        this.y = mouseYY;
+
     }
 
 }

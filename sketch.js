@@ -3,22 +3,14 @@ Først laver vi et nogle variable til at lave en appelsin
  - en kugle som vi vil skyde afsted og fange i en turban
 */
 
-// Turbanen
-var turban;
-let turbanImg;
 // Øvrige
 var respawnTid = 50; //Respawn timer
 var score = 0;
 var antalRamt = 0;
 var antalMiss = 0;
 var currentStreak = 1;
-var currentScene = 0;
+var currentScene = 1;
 
-//Bomber
-var bombe;
-/* 
- * 
- */
 
 function preload() {
     soundFormats('mp3', 'ogg');
@@ -28,14 +20,10 @@ function preload() {
 }
 
 function setup() {
-    createCanvas(750, 600);
+    createCanvas(1000, 900);
     turban = new Kurv(670, 100, 70, 50, 10, turbanImg);
-    point = new Point();
-    bombe0 = new Objekt(50, 550, 4, 10, 25, 0.1, bombeImg, explosionSound, turban, point);
-    bombe1 = new Objekt(50, 550, 4, 3, 25, 0.1, bombeImg, explosionSound, turban, point);
-    bombe2 = new Objekt(50, 550, 4, 7, 25, 0.1, bombeImg, explosionSound, turban, point);
-    bombe3 = new Objekt(50, 550, 4, 15, 25, 0.1, bombeImg, explosionSound, turban, point);
-    bombe4 = new Objekt(50, 550, 4, 19, 25, 0.1, bombeImg, explosionSound, turban, point);
+    scene = new Scenes(turbanImg, bombeImg, explosionSound)
+    scene.initiate();
     explosionSound.setVolume(1);
 }
 
@@ -49,30 +37,10 @@ function draw() {
             text("GAME PLEASE", width/2, height/2);
             break;
         case 1:
-            display();
-            gameMechanics();
-            bombe0.active(true);
-            bombe1.active(true);
-            bombe2.active(true);
-            bombe3.active(true);
-            bombe4.active(true);
+            scene.gameScene();
             break;
     }
 
-}
-
-function display() {
-    fill(255);
-    text("Score: "+point.varScore, width-80, 30);
-    text("Streak: "+point.currentStreak, width-160, 30);
-    text("Missed: "+point.varMissed, width-240, 30);
-    text("Hits: "+point.varHit, width-320, 30);
-
-    turban.tegn();
-}
-
-function gameMechanics() {
-    turban.mouseMove(mouseX, mouseY);
 }
 
 function keyPressed() {

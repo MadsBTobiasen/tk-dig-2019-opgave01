@@ -11,7 +11,7 @@ class Objekt {
         this.DEFAULTYSPEED = yspeed;
         this.xspeed = xspeed;
         this.yspeed = yspeed;
-        this.GRAVITY = grav;
+        this.gravity = grav;
 
         this.RAD = rad;
         
@@ -36,47 +36,44 @@ class Objekt {
     
         this.x += this.xspeed;
         this.y -= this.yspeed;
-        this.yspeed -= this.GRAVITY;
+        this.yspeed -= this.gravity;
         
         if(this.y < 50) {
-            this.y -= this.yspeed - this.GRAVITY;
+            this.y -= this.yspeed - this.gravity;
         }
 
         image(this.BILLEDE, this.x, this.y, this.RAD, this.RAD);
-
-        if(this.yspeed < 0)
-        {
-            this.checkScore();
-        }
+        
+        this.checkScore();
 
     }
     
     checkScore() {
 
-        if(this.yspeed < 0){ //Så længe objektet "falder", så kan det gribes.
-            if(this.KURV.grebet(this.x, this.y, this.RAD)) { //Bliver objektet grebet.
-                this.SOUND.play();
-                this.SOUND.jump(2.5);
-                this.POINT.score(this.POINT.currentStreak*1);
-                this.POINT.hit();
-                this.POINT.streak(true);
+        if(this.KURV.grebet(this.x, this.y, this.yspeed, this.RAD)) { //Bliver objektet grebet.
+            this.SOUND.play();
+            this.SOUND.jump(2.5);
+            this.POINT.score(this.POINT.currentStreak*1);
+            this.POINT.hit();
+            this.POINT.streak(true);
 
-                //Resetter objektet til default værdier her.
-                this.reset();
-            }
-            if(this.x > 600 || this.y > 750) { //Objektet falder ud af skærmen.
-                this.POINT.score(-1);
-                this.POINT.missed();
-                this.POINT.streak(false);
-
-                //Resetter objektet til default værdier her
-                this.reset();
-            }
+            //Resetter objektet til default værdier her.           
+            this.reset();
+        }
+        if(this.x > width || this.y > height) { //Objektet falder ud af skærmen.
+            this.POINT.missed();
+            this.POINT.streak(false);
+            
+            //Resetter objektet til default værdier her
+            this.reset();
         }
 
     }
 
     reset() {
+        var randomGrav = Math.floor(Math.random() * 2 + 1) / 10;
+        
+        this.gravity = randomGrav;
         this.activeBool = false;
         this.yspeed = this.DEFAULTYSPEED;
         this.xspeed = 6*Math.random();
