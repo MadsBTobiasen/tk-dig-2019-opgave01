@@ -9,7 +9,7 @@ var score = 0;
 var antalRamt = 0;
 var antalMiss = 0;
 var currentStreak = 1;
-var currentScene = 1;
+var currentScene = 0;
 
 
 function preload() {
@@ -20,7 +20,8 @@ function preload() {
 }
 
 function setup() {
-    createCanvas(1000, 900);
+    let canvas = createCanvas(900, 1000);
+    canvas.parent('gameCanvas');
     turban = new Kurv(670, height+100, 70, 50, 10, turbanImg);
     scene = new Scenes(turbanImg, bombeImg, explosionSound)
     scene.initiate(5);
